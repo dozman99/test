@@ -1,39 +1,18 @@
-name: Build and Package Artifact
+name: Create Empty Artifact
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch: # Allow manual triggering
+  workflow_dispatch:
 
 jobs:
-  build:
+  create_artifact:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Create empty file
+        run: touch empty_artifact.txt
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18' # or your desired node version
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build application
-      run: npm run build # or your build command
-
-    - name: Package artifact
-      run: |
-        mkdir dist-package
-        cp -r dist/* dist-package/
-        tar -czvf app-artifact.tar.gz dist-package/
-        rm -rf dist-package
-
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-artifact
-        path: app-artifact.tar.gz
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: empty-artifact
+          path: empty_artifact.txt
