@@ -1,0 +1,3 @@
+Yeah, same idea as Vault + Boundary. It's not giving people AWS access, it's brokering it. No IAM creds handed out, SSO login, short-lived sessions, everything recorded. Since this covers contractors too, that's the part that keeps us clean on compliance.
+Scope would be specific resources only: Lambda/CloudWatch logs read-only, and S3 limited to the relevant customer prefixes, with read/write split by role. Nothing changes in our existing Lambda or S3 setup, it just sits in front.
+One catch: Teleport's free edition only supports GitHub SSO. OIDC/SAML is Enterprise. If we don't want to pay, the open-source route is Keycloak (SSO) + Pomerium + Grafana for log visibility, all behind the VPN. Want to talk through which way to go?
